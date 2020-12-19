@@ -1,5 +1,6 @@
 package com.lwl.jdbcexamples;
 
+// Main class to test
 public class Manager {
 
 	
