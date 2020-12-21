@@ -1,10 +1,12 @@
 package com.lwl.jdbcexamples;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 public class DbIntractions {
 
@@ -27,6 +29,33 @@ public class DbIntractions {
 			DbConnectionUtil.util.close(rs, st, con);
 		}
 
+	}
+
+	public void totalSalaryOf(String dname) {
+		Connection con = null;
+		CallableStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			con = DbConnectionUtil.util.getConnectionMySQl();
+			st = con.prepareCall("{call total_sal(?,?)}");
+
+			st.setString(1, dname);
+
+			st.registerOutParameter(1, Types.VARCHAR);
+			st.registerOutParameter(2, Types.FLOAT);
+
+			st.execute();
+			
+			String deptName = st.getString(1);
+			float tsal = st.getFloat(2);
+			System.out.println(deptName + " " + tsal);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DbConnectionUtil.util.close(rs, st, con);
+		}
 	}
 
 	public void addProduct(String pname, float price) {

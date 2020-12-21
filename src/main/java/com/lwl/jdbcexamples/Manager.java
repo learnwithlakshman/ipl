@@ -11,7 +11,7 @@ public class Manager {
 
 			DbIntractions obj = new DbIntractions();
 			
-			obj.showEmpDetails();
+			obj.totalSalaryOf("Sales");
 
 	}
 
